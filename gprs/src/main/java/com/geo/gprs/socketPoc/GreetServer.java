@@ -1,5 +1,10 @@
+//https://aws.amazon.com/blogs/devops/deploying-a-spring-boot-application-on-aws-using-aws-elastic-beanstalk/
+
 package com.geo.gprs.socketPoc;
 
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,6 +12,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+@Component
 public class GreetServer  {
 
     private ServerSocket serverSocket;
@@ -24,8 +30,9 @@ public class GreetServer  {
             out.println("hello client");
         }
         else {
-            out.println("unrecognised greeting");
+            out.println("unrecognised greeting new era 2222");
         }
+        stop();
     }
 
     public void stop() throws IOException {
@@ -34,8 +41,9 @@ public class GreetServer  {
         clientSocket.close();
         serverSocket.close();
     }
-    public static void main(String[] args) throws IOException {
-        GreetServer server=new GreetServer();
-        server.start(6666);
+
+    @PostConstruct
+    private void init() throws IOException {
+        start(9000);
     }
 }
